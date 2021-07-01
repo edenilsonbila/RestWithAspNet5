@@ -9,18 +9,18 @@ namespace CalculadoraRest.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CalculatorController : ControllerBase
+    public class PersonController : ControllerBase
     {
 
-        private readonly ILogger<CalculatorController> _logger;
+        private readonly ILogger<PersonController> _logger;
 
-        public CalculatorController(ILogger<CalculatorController> logger)
+        public PersonController(ILogger<PersonController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
-        public IActionResult Get(string firstNumber, string secondNumber)
+        public IActionResult Sum(string firstNumber, string secondNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
@@ -31,16 +31,27 @@ namespace CalculadoraRest.Controllers
             return BadRequest("Invalid Input!");
         }
 
-        //[HttpGet("div/{firstNumber}/{secondNumber}")]
-        //public IActionResult Get(string numberOne, string numberTwo)
-        //{
-        //    if(IsNumeric(numberOne) && IsNumeric(numberTwo))
-        //    {
-        //        var div = ConvertToDecimal(numberOne) / Convert.ToDecimal(numberTwo);
-        //        return Ok(div.ToString());
-        //    }
-        //    return BadRequest("Invalid Input!");
-        //}
+        [HttpGet("div/{firstNumber}/{secondNumber}")]
+        public IActionResult Div(string firstNumber, string secondNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var div = ConvertToDecimal(firstNumber) / Convert.ToDecimal(secondNumber);
+                return Ok(div.ToString());
+            }
+            return BadRequest("Invalid Input!");
+        }
+
+        [HttpGet("sub/{firstNumber}/{secondNumber}")]
+        public IActionResult Sub(string firstNumber, string secondNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var sub = ConvertToDecimal(firstNumber) - Convert.ToDecimal(secondNumber);
+                return Ok(sub.ToString());
+            }
+            return BadRequest("Invalid Input!");
+        }
 
         private bool IsNumeric(string strNumber)
         {
@@ -59,3 +70,5 @@ namespace CalculadoraRest.Controllers
         }
     }
 }
+
+
