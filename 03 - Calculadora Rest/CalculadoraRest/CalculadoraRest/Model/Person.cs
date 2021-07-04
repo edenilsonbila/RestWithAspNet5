@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CalculadoraRest.Model
 {
+    [Table("person")]
     public class Person
     {
-        public long Id { get; set; } 
+        [Column("id")]
+        public long Id { get; set; }
+        [Column("first_name")]
         public string FirtName { get; set; }
+        [Column("last_name")]
         public string LastName { get; set; }
+        [Column("address")]
         public string Address { get; set; }
+        [Column("gender")]
         public string Gender { get; set; }
     }
 }
