@@ -2,7 +2,7 @@ using CalculadoraRest.Business;
 using CalculadoraRest.Business.Implementations;
 using CalculadoraRest.Model.Context;
 using CalculadoraRest.Repository;
-using CalculadoraRest.Repository.Implementations;
+using CalculadoraRest.Repository.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -47,9 +47,8 @@ namespace CalculadoraRest
             services.AddApiVersioning();
 
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+            services.AddScoped(typeof (IRepository<>),typeof(GenericRepository<>));
         }
 
         private void MigrateDatabase(string connection)

@@ -1,4 +1,5 @@
 ﻿using CalculadoraRest.Model;
+using CalculadoraRest.Model.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace CalculadoraRest.Repository
 {
-    public interface IPersonRepository
+    public interface IRepository<T> where T : BaseEntity
     {
-        Person Create(Person person);
-        Person Update(Person person);
+        T Create(T item);
+        T Update(T item);
 
-        Person FindByID(long id);
+        T FindByID(long id);
 
-        List<Person> FindAll();
+        List<T> FindAll();
 
         void Delete(long id);
 

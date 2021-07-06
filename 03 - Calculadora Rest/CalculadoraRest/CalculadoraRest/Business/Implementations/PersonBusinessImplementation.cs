@@ -9,9 +9,9 @@ namespace CalculadoraRest.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
-        private readonly IPersonRepository _repository;
+        private readonly IRepository<Person> _repository;
 
-        public PersonBusinessImplementation(IPersonRepository context)
+        public PersonBusinessImplementation(IRepository<Person> context)
         {
             _repository = context;
         }

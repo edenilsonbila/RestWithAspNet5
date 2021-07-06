@@ -1,12 +1,7 @@
 ﻿using CalculadoraRest.Business;
 using CalculadoraRest.Model;
-using CalculadoraRest.Repository.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CalculadoraRest.Controllers
 {
