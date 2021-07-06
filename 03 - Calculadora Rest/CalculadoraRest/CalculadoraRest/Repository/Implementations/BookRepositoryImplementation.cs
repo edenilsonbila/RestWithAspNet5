@@ -6,89 +6,89 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CalculadoraRest.Services.Implementations
+namespace CalculadoraRest.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class BookRepositoryImplementation : IBookRepository
     {
         private MySqlContext _context;
 
-        public PersonServiceImplementation(MySqlContext context)
+        public BookRepositoryImplementation(MySqlContext context)
         {
             _context = context;
         }
 
-        public List<Person> FindAll()
+        public List<Book> FindAll()
         {
-            return _context.Persons.ToList();
+            return _context.Books.ToList();
         }
 
-        public Person FindByID(long id)
+        public Book FindByID(long id)
         {
-            return _context.Persons.Find(id);
+            return _context.Books.Find(id);
         }
 
-        public Person Create(Person person)
+        public Book Create(Book Book)
         {
             try
             {
-                _context.Add(person);
+                _context.Add(Book);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
 
-            return person;
+            return Book;
         }
 
-        public Person Update(Person person)
+        public Book Update(Book Book)
         {
-            if (!Exists(person.Id)) return new Person();
+            if (!Exists(Book.Id)) return null;
 
-            var result = _context.Persons.SingleOrDefault(_ => _.Id.Equals(person.Id));
+            var result = _context.Books.SingleOrDefault(_ => _.Id.Equals(Book.Id));
 
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(person).CurrentValues.SetValues(person);
+                    _context.Entry(Book).CurrentValues.SetValues(Book);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    throw;
                 }
             }
-            return person;
+            return Book;
         }
 
         public void Delete(long id)
         {
-            var result = _context.Persons.SingleOrDefault(_ => _.Id.Equals(id));
+            var result = _context.Books.SingleOrDefault(_ => _.Id.Equals(id));
             if (result != null)
             {
                 try
                 {
-                    _context.Persons.Remove(result);
+                    _context.Books.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    throw;
                 }
             }
 
         }
-
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
-            return _context.Persons.Any(_ => _.Id.Equals(id));
+            return _context.Books.Any(_ => _.Id.Equals(id));
         }
 
-        //private Person MockPerson(int i)
+
+        //private Book MockBook(int i)
         //{
-        //    return new Person
+        //    return new Book
         //    {
         //        Id = 1,
         //        FirtName = "Edenilson",

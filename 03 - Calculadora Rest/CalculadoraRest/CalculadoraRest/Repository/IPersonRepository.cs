@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CalculadoraRest.Services.Implementations
+namespace CalculadoraRest.Repository
 {
-    public interface IPersonService
+    public interface IPersonRepository
     {
         Person Create(Person person);
         Person Update(Person person);
@@ -17,5 +17,6 @@ namespace CalculadoraRest.Services.Implementations
 
         void Delete(long id);
 
+        bool Exists(long id);
     }
 }
