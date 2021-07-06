@@ -1,12 +1,8 @@
 ﻿using CalculadoraRest.Business;
+using CalculadoraRest.Data.VO;
 using CalculadoraRest.Model;
-using CalculadoraRest.Repository.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CalculadoraRest.Controllers
 {
@@ -43,7 +39,7 @@ namespace CalculadoraRest.Controllers
 
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null)
                 return BadRequest();
@@ -52,7 +48,7 @@ namespace CalculadoraRest.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book book)
+        public IActionResult Put([FromBody] BookVO book)
         {
             if (book == null)
                 return BadRequest();

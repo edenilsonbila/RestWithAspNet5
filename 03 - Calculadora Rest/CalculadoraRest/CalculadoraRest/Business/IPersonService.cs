@@ -1,19 +1,16 @@
-﻿using CalculadoraRest.Model;
-using System;
+﻿using CalculadoraRest.Data.VO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CalculadoraRest.Business
 {
     public interface IPersonBusiness
     {
-        Person Create(Person person);
-        Person Update(Person person);
+        PersonVO Create(PersonVO person);
+        PersonVO Update(PersonVO person);
 
-        Person FindByID(long id);
+        PersonVO FindByID(long id);
 
-        List<Person> FindAll();
+        List<PersonVO> FindAll();
 
         void Delete(long id);
 

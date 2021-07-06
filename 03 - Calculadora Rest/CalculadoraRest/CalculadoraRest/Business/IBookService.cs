@@ -1,19 +1,16 @@
-﻿using CalculadoraRest.Model;
-using System;
+﻿using CalculadoraRest.Data.VO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CalculadoraRest.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book book);
-        Book Update(Book book);
+        BookVO Create(BookVO book);
+        BookVO Update(BookVO book);
 
-        Book FindByID(long id);
+        BookVO FindByID(long id);
 
-        List<Book> FindAll();
+        List<BookVO> FindAll();
 
         void Delete(long id);
 

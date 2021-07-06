@@ -2,7 +2,7 @@ using CalculadoraRest.Business;
 using CalculadoraRest.Business.Implementations;
 using CalculadoraRest.Model.Context;
 using CalculadoraRest.Repository;
-using CalculadoraRest.Repository.Implementations;
+using CalculadoraRest.Repository.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace CalculadoraRest
 {
@@ -44,12 +45,19 @@ namespace CalculadoraRest
                 MigrateDatabase(connection);
             }
 
+            services.AddMvc(options => {
+                //Aceita o tipo solicitado no header da requisição
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", "application/xml");
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", "application/json");
+            }).AddXmlSerializerFormatters();
+
             services.AddApiVersioning();
 
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+            services.AddScoped(typeof (IRepository<>),typeof(GenericRepository<>));
         }
 
         private void MigrateDatabase(string connection)

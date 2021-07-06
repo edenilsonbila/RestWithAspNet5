@@ -5,18 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CalculadoraRest.Model
+namespace CalculadoraRest.Data.VO
 {
-    [Table("books")]
-    public class Book : BaseEntity
+
+    public class BookVO
     {
-        [Column("author")]
+        public long Id { get; set; }
         public string Author { get; set; }
-        [Column("launch_date")]
+
         public DateTime LauchDate { get; set; }
-        [Column("price")]
+  
         public decimal Price { get; set; }
-        [Column("title")]
+
         public string Title { get; set; }
     }
 }
