@@ -10,7 +10,7 @@ namespace CalculadoraRest.Hypermedia
     {
         public string Rel { get; set; }
 
-        private string href { get; set; }
+        private string href;
 
         public string Href
         {
@@ -19,7 +19,7 @@ namespace CalculadoraRest.Hypermedia
                 object _lock = new object();
                 lock (_lock)
                 {
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb = new StringBuilder(href);
                     return sb.Replace("%2F", "/").ToString();
                 }
             }

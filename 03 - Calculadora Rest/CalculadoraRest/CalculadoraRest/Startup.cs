@@ -59,6 +59,7 @@ namespace CalculadoraRest
 
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ContentRespondeEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentRespondeEnricherList.Add(new BookEnricher());
             services.AddSingleton(filterOptions);
 
             services.AddApiVersioning();

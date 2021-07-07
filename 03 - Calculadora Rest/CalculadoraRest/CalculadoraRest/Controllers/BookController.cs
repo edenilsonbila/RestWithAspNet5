@@ -1,6 +1,6 @@
 ﻿using CalculadoraRest.Business;
 using CalculadoraRest.Data.VO;
-using CalculadoraRest.Model;
+using CalculadoraRest.Hypermedia.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,12 +22,14 @@ namespace CalculadoraRest.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_bookService.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var book = _bookService.FindByID(id);
@@ -39,6 +41,7 @@ namespace CalculadoraRest.Controllers
 
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null)
@@ -47,7 +50,9 @@ namespace CalculadoraRest.Controllers
             return Ok(_bookService.Create(book));
         }
 
+
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BookVO book)
         {
             if (book == null)
