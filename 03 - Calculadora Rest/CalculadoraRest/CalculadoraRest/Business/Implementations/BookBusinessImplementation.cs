@@ -1,44 +1,73 @@
-﻿using CalculadoraRest.Model;
-using CalculadoraRest.Model.Context;
+﻿using CalculadoraRest.Business;
+using CalculadoraRest.Data.Converter.Implementation;
+using CalculadoraRest.Data.VO;
+using CalculadoraRest.Model;
 using CalculadoraRest.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace CalculadoraRest.Business.Implementations
+namespace RestWithASPNETUdemy.Business.Implementations
 {
     public class BookBusinessImplementation : IBookBusiness
     {
         private readonly IRepository<Book> _repository;
+        private readonly BookConverter _converter;
 
-        public BookBusinessImplementation(IRepository<Book> context)
+        public BookBusinessImplementation(IRepository<Book> repository)
         {
-            _repository = context;
+            _repository = repository;
+            _converter = new BookConverter();
         }
 
-        public List<Book> FindAll()
+        public List<BookVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.Parse(_repository.FindAll());
         }
 
-        public Book FindByID(long id)
+        public BookVO FindByID(long id)
         {
-            return _repository.FindByID(id);
+            return _converter.Parse(_repository.FindByID(id));
         }
 
-        public Book Create(Book book)
+        public BookVO Create(BookVO book)
         {
-            return _repository.Create(book);
+            try
+            {
+                var bookEntity = _converter.Parse(book);
+                bookEntity = _repository.Create(bookEntity);
+                return _converter.Parse(_repository.Create(bookEntity));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Book Update(Book book)
+        public BookVO Update(BookVO book)
         {
-            return _repository.Update(book);
+            try
+            {
+                var bookEntity = _converter.Parse(book);
+                bookEntity = _repository.Create(bookEntity);
+                return _converter.Parse(_repository.Update(bookEntity));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void Delete(long id)
         {
-            _repository.Delete(id);
+            try
+            {
+                _repository.Delete(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
     }
 }

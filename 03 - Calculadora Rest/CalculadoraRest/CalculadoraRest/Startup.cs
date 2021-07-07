@@ -1,5 +1,7 @@
 using CalculadoraRest.Business;
 using CalculadoraRest.Business.Implementations;
+using CalculadoraRest.Hypermedia.Enricher;
+using CalculadoraRest.Hypermedia.Filters;
 using CalculadoraRest.Model.Context;
 using CalculadoraRest.Repository;
 using CalculadoraRest.Repository.Generic;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestWithASPNETUdemy.Business.Implementations;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -53,6 +56,11 @@ namespace CalculadoraRest
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", "application/json");
             }).AddXmlSerializerFormatters();
 
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentRespondeEnricherList.Add(new PersonEnricher());
+            services.AddSingleton(filterOptions);
+
             services.AddApiVersioning();
 
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
@@ -96,6 +104,7 @@ namespace CalculadoraRest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CalculadoraRest.Business;
 using CalculadoraRest.Data.VO;
+using CalculadoraRest.Hypermedia.Filters;
 using CalculadoraRest.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,12 +23,14 @@ namespace CalculadoraRest.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personService.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var person = _personService.FindByID(id);
@@ -39,6 +42,7 @@ namespace CalculadoraRest.Controllers
 
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null)
@@ -48,6 +52,7 @@ namespace CalculadoraRest.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null)
