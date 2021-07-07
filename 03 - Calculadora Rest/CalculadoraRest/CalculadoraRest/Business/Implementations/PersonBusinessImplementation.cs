@@ -1,43 +1,39 @@
-﻿using CalculadoraRest.Data.Converter.Implementation;
-using CalculadoraRest.Data.VO;
-using CalculadoraRest.Model;
+﻿using CalculadoraRest.Model;
+using CalculadoraRest.Model.Context;
 using CalculadoraRest.Repository;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculadoraRest.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
         private readonly IRepository<Person> _repository;
-        private readonly PersonConverter _converter;
+
         public PersonBusinessImplementation(IRepository<Person> context)
         {
             _repository = context;
-            _converter = new PersonConverter();
         }
 
-        public List<PersonVO> FindAll()
+        public List<Person> FindAll()
         {
-            return _converter.Parse(_repository.FindAll());
+            return _repository.FindAll();
         }
 
-        public PersonVO FindByID(long id)
+        public Person FindByID(long id)
         {
-            return _converter.Parse(_repository.FindByID(id));
+            return _repository.FindByID(id);
         }
 
-        public PersonVO Create(PersonVO person)
+        public Person Create(Person person)
         {
-            var personEntity = _converter.Parse(person);
-            personEntity= _repository.Create(personEntity);
-            return _converter.Parse(personEntity);
+            return _repository.Create(person);
         }
 
-        public PersonVO Update(PersonVO person)
+        public Person Update(Person person)
         {
-            var personEntity = _converter.Parse(person);
-            personEntity = _repository.Update(personEntity);
-            return _converter.Parse(personEntity);
+            return _repository.Update(person);
         }
 
         public void Delete(long id)

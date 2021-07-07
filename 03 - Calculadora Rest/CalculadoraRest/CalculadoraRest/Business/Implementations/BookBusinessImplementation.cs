@@ -1,44 +1,39 @@
-﻿using CalculadoraRest.Data.Converter.Implementation;
-using CalculadoraRest.Data.VO;
-using CalculadoraRest.Model;
+﻿using CalculadoraRest.Model;
+using CalculadoraRest.Model.Context;
 using CalculadoraRest.Repository;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculadoraRest.Business.Implementations
 {
     public class BookBusinessImplementation : IBookBusiness
     {
         private readonly IRepository<Book> _repository;
-        private readonly BookConverter _converter;
 
         public BookBusinessImplementation(IRepository<Book> context)
         {
             _repository = context;
-            _converter = new BookConverter();
         }
 
-        public List<BookVO> FindAll()
+        public List<Book> FindAll()
         {
-            return _converter.Parse(_repository.FindAll());
+            return _repository.FindAll();
         }
 
-        public BookVO FindByID(long id)
+        public Book FindByID(long id)
         {
-            return _converter.Parse(_repository.FindByID(id));
+            return _repository.FindByID(id);
         }
 
-        public BookVO Create(BookVO book)
+        public Book Create(Book book)
         {
-            var entity = _converter.Parse(book);
-            entity = _repository.Create(entity);
-            return _converter.Parse(entity);
+            return _repository.Create(book);
         }
 
-        public BookVO Update(BookVO book)
+        public Book Update(Book book)
         {
-            var entity = _converter.Parse(book);
-            entity = _repository.Update(entity);
-            return _converter.Parse(entity);
+            return _repository.Update(book);
         }
 
         public void Delete(long id)
