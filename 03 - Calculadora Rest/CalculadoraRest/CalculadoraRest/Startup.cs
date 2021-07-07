@@ -7,10 +7,12 @@ using CalculadoraRest.Repository;
 using CalculadoraRest.Repository.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using RestWithASPNETUdemy.Business.Implementations;
 using Serilog;
 using System;
@@ -64,6 +66,20 @@ namespace CalculadoraRest
 
             services.AddApiVersioning();
 
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo { 
+                    Title = "REST API's",
+                    Version = "v1",
+                    Description = "API RESTful",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Edenilson Bila",
+                        Url = new Uri("https://github.com/edenilsonbila")
+                    }
+                    });
+            });
+
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped(typeof (IRepository<>),typeof(GenericRepository<>));
@@ -100,6 +116,17 @@ namespace CalculadoraRest
 
             app.UseRouting();
 
+            //Cria o JSON com a documentação
+            app.UseSwagger();
+            //Gera a Pagina HTML do swagger
+            app.UseSwaggerUI(c=> {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API'S V1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -110,3 +137,4 @@ namespace CalculadoraRest
         }
     }
 }
+

@@ -4,6 +4,7 @@ using CalculadoraRest.Hypermedia.Filters;
 using CalculadoraRest.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace CalculadoraRest.Controllers
 {
@@ -23,6 +24,11 @@ namespace CalculadoraRest.Controllers
         }
 
         [HttpGet]
+        //Define o tipo de retorno do Swagger para cada status code
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -31,6 +37,10 @@ namespace CalculadoraRest.Controllers
 
         [HttpGet("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             var person = _personService.FindByID(id);
@@ -42,6 +52,9 @@ namespace CalculadoraRest.Controllers
 
 
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
@@ -52,7 +65,11 @@ namespace CalculadoraRest.Controllers
         }
 
         [HttpPut]
+        //Configura o HateOas
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null)
