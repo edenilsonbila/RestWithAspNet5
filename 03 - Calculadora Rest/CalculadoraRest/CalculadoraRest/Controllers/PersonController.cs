@@ -2,6 +2,7 @@
 using CalculadoraRest.Data.VO;
 using CalculadoraRest.Hypermedia.Filters;
 using CalculadoraRest.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace CalculadoraRest.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
