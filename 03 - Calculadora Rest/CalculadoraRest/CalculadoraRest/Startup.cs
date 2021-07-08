@@ -38,7 +38,12 @@ namespace CalculadoraRest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddCors(_ => _.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
             
             services.AddControllers();
 
@@ -107,6 +112,7 @@ namespace CalculadoraRest
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -115,6 +121,8 @@ namespace CalculadoraRest
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             //Cria o JSON com a documentação
             app.UseSwagger();

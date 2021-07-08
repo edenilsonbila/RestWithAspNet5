@@ -20,7 +20,7 @@ namespace CalculadoraRest.Hypermedia
                 lock (_lock)
                 {
                     StringBuilder sb = new StringBuilder(href);
-                    return sb.Replace("%2F", "/").ToString();
+                    return sb.Replace("%2F", "/").Replace("?version=1", "").ToString();
                 }
             }
             set { href = value; }
