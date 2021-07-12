@@ -103,6 +103,7 @@ namespace CalculadoraRest
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", "application/json");
             }).AddXmlSerializerFormatters();
 
+            services.Configure<PagedConfiguration>(Configuration.GetSection("PagedConfig"));
 
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ContentRespondeEnricherList.Add(new PersonEnricher());

@@ -36,5 +36,28 @@ namespace CalculadoraRest.Repository
             }
             return user;
         }
+
+        public List<Person> FindByName(string firtName, string lastName)
+        {
+            if (!string.IsNullOrEmpty(firtName) && !string.IsNullOrEmpty(lastName))
+            {
+                return _context.Persons
+               .Where(p => p.FirtName.Contains(firtName)
+               && p.LastName.Contains(lastName)).ToList();
+            }else
+            if (!string.IsNullOrEmpty(firtName))
+            {
+                return _context.Persons
+               .Where(p => p.FirtName.Contains(firtName)).ToList();
+            }
+            else
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                return _context.Persons
+               .Where(p => p.LastName.Contains(lastName)).ToList();
+            }
+
+            return null;
+        }
     }
 }

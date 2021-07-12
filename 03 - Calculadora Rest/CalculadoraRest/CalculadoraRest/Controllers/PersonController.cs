@@ -25,17 +25,16 @@ namespace CalculadoraRest.Controllers
             _personService = personBusiness;
         }
 
-        [HttpGet]
+        [HttpGet("{sortDirection}/{pagedSize}/{page}")]
         //Define o tipo de retorno do Swagger para cada status code
         [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
-        [Authorize("Bearer")]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] string name, string sortDirection, int pagedSize, int page)
         {
-            return Ok(_personService.FindAll());
+            return Ok(_personService.FindWithPagedSearch(name, sortDirection, pagedSize, page));
         }
 
         [HttpGet("{id}")]
@@ -47,6 +46,21 @@ namespace CalculadoraRest.Controllers
         public IActionResult Get(long id)
         {
             var person = _personService.FindByID(id);
+            if (person == null)
+                return NotFound();
+
+            return Ok(person);
+        }
+
+        [HttpGet("findPersonByName")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Get([FromQuery] string firstName, [FromQuery] string lastName)
+        {
+            var person = _personService.FindByName(firstName, lastName);
             if (person == null)
                 return NotFound();
 
