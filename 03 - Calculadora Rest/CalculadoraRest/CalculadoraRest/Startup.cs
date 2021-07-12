@@ -133,6 +133,7 @@ namespace CalculadoraRest
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped<ILoginBusiness, LoginBussinessImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
             //É sempre um objeto novo o inverso de singleton
             services.AddTransient<ITokenService, TokenService>();

@@ -12,6 +12,8 @@ namespace CalculadoraRest.Business
 
         List<PersonVO> FindAll();
 
+        PersonVO Disable(long id);
+
         void Delete(long id);
 
     }

@@ -32,6 +32,7 @@ namespace CalculadoraRest.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [Authorize("Bearer")]
         public IActionResult Get()
         {
             return Ok(_personService.FindAll());
@@ -80,6 +81,18 @@ namespace CalculadoraRest.Controllers
             return Ok(_personService.Update(person));
         }
 
+        [HttpPatch("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Patch(long id)
+        {
+            var person = _personService.Disable(id);
+            
+            return Ok(person);
+        }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
