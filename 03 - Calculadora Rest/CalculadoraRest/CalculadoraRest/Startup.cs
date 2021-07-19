@@ -12,10 +12,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -130,10 +132,13 @@ namespace CalculadoraRest
                     });
             });
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             //Escoped o Objeto é por Requisição, cada requisição é criado um e finalizado o fim da requisição
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped<ILoginBusiness, LoginBussinessImplementation>();
+            services.AddScoped<IFileBusiness, FileBusinessImplementation>();
             services.AddScoped<IPersonRepository, PersonRepository>();
 
             //É sempre um objeto novo o inverso de singleton
