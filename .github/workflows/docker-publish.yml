@@ -19,7 +19,7 @@ jobs:
           login-server: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}
     
       - name: Build Images
-        working-directory: ./20_RestWithASPNETUdemy_DeployToAzure/RestWithASPNETUdemy
+        working-directory: ./03_CalculadoraRest/CalculadoraRest
         run: docker-compose build
       
       - name: Push to Azure Container registry
@@ -35,5 +35,5 @@ jobs:
       - name: Azure WebApp Container - Application Deployment
         uses: azure/webapps-deploy@v2
         with:
-          app-name: erudio-api-server
+          app-name: erudio-api-server1
           images:  ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{github.run_id}}
