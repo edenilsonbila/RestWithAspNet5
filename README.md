@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/edenilsonbila/RestWithAspNet5.svg?branch=main)](https://travis-ci.org/edenilsonbila/RestWithAspNet5)
+[![Continuous Integration with Github Actions](https://github.com/edenilsonbila/RestWithAspNet5/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/edenilsonbila/RestWithAspNet5/actions/workflows/docker-publish.yml)
