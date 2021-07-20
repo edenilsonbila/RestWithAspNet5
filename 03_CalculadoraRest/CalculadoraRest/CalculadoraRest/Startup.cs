@@ -47,11 +47,11 @@ namespace CalculadoraRest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Popula a classe TokenConfiguratir da sess„o TokenConfiguration do app.settings
+            //Popula a classe TokenConfiguratir da sess√£o TokenConfiguration do app.settings
             var tokenConfigurations = new TokenConfiguration();
             new ConfigureFromConfigurationOptions<TokenConfiguration>(Configuration.GetSection("TokenConfigurations")).Configure(tokenConfigurations);
 
-            //AddSingleton pois sÛ havera uma instancia de tokenConfiguration ser· global
+            //AddSingleton pois s√≥ havera uma instancia de tokenConfiguration ser√° global
             services.AddSingleton(tokenConfigurations);
 
             services.AddAuthentication(options =>
@@ -98,7 +98,7 @@ namespace CalculadoraRest
 
             services.AddMvc(options =>
             {
-                //Aceita o tipo solicitado no header da requisiÁ„o
+                //Aceita o tipo solicitado no header da requisi√ß√£o
                 options.RespectBrowserAcceptHeader = true;
 
                 options.FormatterMappings.SetMediaTypeMappingForFormat("xml", "application/xml");
@@ -111,7 +111,7 @@ namespace CalculadoraRest
             filterOptions.ContentRespondeEnricherList.Add(new PersonEnricher());
             filterOptions.ContentRespondeEnricherList.Add(new BookEnricher());
 
-            //Singleton = o Objeto È reutilizado durante a execuÁ„o da aplicaÁ„o
+            //Singleton = o Objeto √© reutilizado durante a execu√ß√£o da aplica√ß√£o
             services.AddSingleton(filterOptions);
 
             services.AddApiVersioning();
@@ -121,7 +121,7 @@ namespace CalculadoraRest
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
-                        Title = "REST API's",
+                        Title = "REST API's - Foo Bar",
                         Version = "v1",
                         Description = "API RESTful",
                         Contact = new OpenApiContact
@@ -134,14 +134,14 @@ namespace CalculadoraRest
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //Escoped o Objeto È por RequisiÁ„o, cada requisiÁ„o È criado um e finalizado o fim da requisiÁ„o
+            //Escoped o Objeto √© por Requisi√ß√£o, cada requisi√ß√£o √© criado um e finalizado o fim da requisi√ß√£o
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped<ILoginBusiness, LoginBussinessImplementation>();
             services.AddScoped<IFileBusiness, FileBusinessImplementation>();
             services.AddScoped<IPersonRepository, PersonRepository>();
 
-            //… sempre um objeto novo o inverso de singleton
+            //√â sempre um objeto novo o inverso de singleton
             services.AddTransient<ITokenService, TokenService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -183,7 +183,7 @@ namespace CalculadoraRest
 
             app.UseCors();
 
-            //Cria o JSON com a documentaÁ„o
+            //Cria o JSON com a documenta√ß√£o
             app.UseSwagger();
             //Gera a Pagina HTML do swagger
             app.UseSwaggerUI(c =>
